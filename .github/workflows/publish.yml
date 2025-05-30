@@ -36,6 +36,12 @@ jobs:
           mv oras-install/oras /usr/local/bin/
           rm -rf oras_0.13.0_*.tar.gz oras-install/
 
+      - name: Fetch devcontainer-control-manifest.json
+        run: |
+          cd _data
+          oras pull ghcr.io/devcontainers/control-manifest:latest
+          cp devcontainer-control-manifest.json ../static/
+
       - name: Fetch devcontainer-index.json
         run: |
           cd _data
@@ -52,7 +58,7 @@ jobs:
           destination: ./_site
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
 
   # Deployment job
   deploy:
@@ -64,4 +70,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
